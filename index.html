@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krome - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="ph-bold ph-chart-bar"></i>
+                <span>KROME ADS</span>
+            </div>
+            <ul>
+                <li class="active"><a href="#"><i class="ph-fill ph-house"></i><span>Dashboard</span></a></li>
+                <li><a href="#"><i class="ph-fill ph-users"></i><span>Leads</span></a></li>
+                <li><a href="#"><i class="ph-fill ph-rocket-launch"></i><span>Campanhas</span></a></li>
+                <li><a href="#"><i class="ph-fill ph-chart-line-up"></i><span>Relatórios</span></a></li>
+                <li><a href="#"><i class="ph-fill ph-gear"></i><span>Configurações</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#"><i class="ph-fill ph-sign-out"></i><span>Sair</span></a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header>
+                <h1>Dashboard de Performance</h1>
+                <p>Métricas consolidadas das suas campanhas em tempo real.</p>
+            </header>
+
+            <section class="metrics-grid">
+                <div class="metric-card">
+                    <h3>Valor Gasto (Últimos 30d)</h3>
+                    <p id="valor-gasto">--</p>
+                    <span class="card-icon"><i class="ph-bold ph-wallet"></i></span>
+                </div>
+                <div class="metric-card">
+                    <h3>Impressões</h3>
+                    <p id="impressoes">--</p>
+                    <span class="card-icon"><i class="ph-bold ph-eye"></i></span>
+                </div>
+                <div class="metric-card">
+                    <h3>Alcance</h3>
+                    <p id="alcance">--</p>
+                    <span class="card-icon"><i class="ph-bold ph-users-three"></i></span>
+                </div>
+                <div class="metric-card">
+                    <h3>Total de Leads</h3>
+                    <p id="total-leads">--</p>
+                    <span class="card-icon"><i class="ph-bold ph-user-list"></i></span>
+                </div>
+                <div class="metric-card">
+                    <h3>Custo por Resultado</h3>
+                    <p id="cpr">--</p>
+                    <span class="card-icon"><i class="ph-bold ph-crosshair"></i></span>
+                </div>
+                <div class="metric-card">
+                    <h3>Custo por Lead</h3>
+                    <p id="cpl">--</p>
+                    <span class="card-icon"><i class="ph-bold ph-money"></i></span>
+                </div>
+            </section>
+
+            <section class="campaign-details">
+                <h2>Detalhes por Campanha</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome da Campanha</th>
+                                <th>Estratégia de Lance</th>
+                                <th>Valor Gasto</th>
+                                <th>Impressões</th>
+                                <th>Resultados</th>
+                                <th>Custo por Resultado</th>
+                                <th>Compras</th>
+                                <th>ROAS (Compra)</th>
+                                <th>Frequência</th>
+                                <th>CTR (%)</th>
+                                <th>Class. Qualidade</th>
+                                <th>Class. Engaj.</th>
+                                <th>Class. Conversão</th>
+                            </tr>
+                        </thead>
+                        <tbody id="campaign-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+            </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
