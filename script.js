@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ======================= CONFIGURAÇÕES DA API DO META =======================
-    const ACCESS_TOKEN = 'EAAsMEK8FyKkBPTZBZBOTv0CqJ4DQa9vo4NuuL1j96sqcYWRxCMqdvd56QFAqFTmAXGDFAKIQQfCVGd71UrlWaPZAltoF6GBdu20ICZBTof4He7LoklZCuJpVaLQ3MnEev72mUY9Thx5Vx2ZA7qtdoU7bKKCNfATzxX6vpI8z6Cw1c98it3XKXZC2MMfe60pN5qqZB8Xt5ef2Vmk5hhijkc5OhXKsZAZAYLGuag4XZBa';
+    const ACCESS_TOKEN = 'EAAsMEK8FyKkBPSoo31FGe4N1VKQZC2oqvHimlONAAMCHNJtySXhlf4ul9O8GPNB8hOpwnw98vENKydFVJPXmArz0GHJIR05qmHl6XuuXuKOUeoQMkLIlNjU77PLz1EIXJDvDMYmESBAZBt0mmphtBlXZACGy8Hs2YZCaxZAohknhuywiyB14CCb2fyXHZBN0DLkxZBtJMwVZCQ2cRhiaNDjIviNctrZAJsyZC7fQMKHZCnX';
     const AD_ACCOUNT_ID = 'act_664801212713219';
 
     // Funções de formatação para reutilização
@@ -151,4 +151,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initializeDashboard();
+
 });
