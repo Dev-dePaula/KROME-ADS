@@ -30,61 +30,43 @@
         <main class="main-content">
             <header>
                 <h1>Dashboard de Performance</h1>
-                <p>Métricas consolidadas das suas campanhas em tempo real.</p>
+                <p>Métricas essenciais das suas campanhas em tempo real.</p>
             </header>
 
             <section class="metrics-grid">
                 <div class="metric-card">
-                    <h3>Valor Gasto (Últimos 30d)</h3>
-                    <p id="valor-gasto">--</p>
+                    <h3>Valor Investido (Total)</h3>
+                    <p id="valor-investido">--</p>
                     <span class="card-icon"><i class="ph-bold ph-wallet"></i></span>
                 </div>
                 <div class="metric-card">
-                    <h3>Impressões</h3>
-                    <p id="impressoes">--</p>
-                    <span class="card-icon"><i class="ph-bold ph-eye"></i></span>
+                    <h3>Visitas ao Perfil (Total)</h3>
+                    <p id="visitas-perfil">--</p>
+                    <span class="card-icon"><i class="ph-bold ph-user-circle"></i></span>
                 </div>
                 <div class="metric-card">
-                    <h3>Alcance</h3>
+                    <h3>Alcance (Total)</h3>
                     <p id="alcance">--</p>
                     <span class="card-icon"><i class="ph-bold ph-users-three"></i></span>
                 </div>
                 <div class="metric-card">
-                    <h3>Total de Leads</h3>
-                    <p id="total-leads">--</p>
-                    <span class="card-icon"><i class="ph-bold ph-user-list"></i></span>
-                </div>
-                <div class="metric-card">
-                    <h3>Custo por Resultado</h3>
-                    <p id="cpr">--</p>
-                    <span class="card-icon"><i class="ph-bold ph-crosshair"></i></span>
-                </div>
-                <div class="metric-card">
-                    <h3>Custo por Lead</h3>
-                    <p id="cpl">--</p>
-                    <span class="card-icon"><i class="ph-bold ph-money"></i></span>
+                    <h3>CTR (Médio)</h3>
+                    <p id="ctr">--</p>
+                    <span class="card-icon"><i class="ph-bold ph-cursor-click"></i></span>
                 </div>
             </section>
-
+            
             <section class="campaign-details">
-                <h2>Detalhes por Campanha</h2>
+                <h2>Performance por Campanha</h2>
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
                                 <th>Nome da Campanha</th>
-                                <th>Estratégia de Lance</th>
-                                <th>Valor Gasto</th>
-                                <th>Impressões</th>
-                                <th>Resultados</th>
-                                <th>Custo por Resultado</th>
-                                <th>Compras</th>
-                                <th>ROAS (Compra)</th>
-                                <th>Frequência</th>
+                                <th>Valor Investido</th>
+                                <th>Visitas ao Perfil</th>
+                                <th>Alcance</th>
                                 <th>CTR (%)</th>
-                                <th>Class. Qualidade</th>
-                                <th>Class. Engaj.</th>
-                                <th>Class. Conversão</th>
                             </tr>
                         </thead>
                         <tbody id="campaign-table-body">
@@ -92,7 +74,8 @@
                     </table>
                 </div>
             </section>
-            </main>
+
+        </main>
     </div>
 
     <script src="script.js"></script>
