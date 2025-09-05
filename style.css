@@ -111,6 +111,39 @@ body {
     color: var(--text-secondary);
 }
 
+/* ======================= CLIENT SELECTOR ======================= */
+.client-selector-container {
+    margin-top: 25px;
+    background-color: var(--bg-light);
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    max-width: 500px;
+}
+
+.client-selector-container label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+#client-selector {
+    width: 100%;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#client-selector:focus {
+    outline: 2px solid var(--primary);
+}
+
+
 /* ======================= METRICS GRID ======================= */
 .metrics-grid {
     display: grid;
