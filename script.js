@@ -1,84 +1,78 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ======================= CONFIGURAÇÕES DA API DO META =======================
-    const ACCESS_TOKEN = 'EAAsMEK8FyKkBPVZCb2ZCZA8LZAz3JZB5wzzs809SbuaI0JaL1zde24Bh8FpNvZAGCftotbBZA7qhdPkTNzskIa9u843YG7ZBNLNrZBQQNnVsGia1Kmg5D7Q0qRwOuXZCP4DDKGSEhiaYtedZBvvgrYdr9CfOmLyNjFeSqoqtQLL5dsQM2d8rv9lQ0a3erXQDPH24Ibo2NZCGClrT4MGlGdHVRoHZA9RV90SxhYuU80uKr8ZBsZD';
-    const AD_ACCOUNT_ID = 'act_664801212713219';
+    // ======================= LISTA DE CLIENTES =======================
+    // ATENÇÃO: PREENCHA AQUI COM OS DADOS DOS SEUS CLIENTES
+    // Para cada cliente, adicione um objeto com nome, ID da conta e o Token de Acesso.
+    const clients = [
+        {
+            name: 'Cliente - Roberta Nunes',
+            adAccountId: 'act_664801212713219',
+            accessToken: 'EAAsMEK8FyKkBPVZCb2ZCZA8LZAz3JZB5wzzs809SbuaI0JaL1zde24Bh8FpNvZAGCftotbBZA7qhdPkTNzskIa9u843YG7ZBNLNrZBQQNnVsGia1Kmg5D7Q0qRwOuXZCP4DDKGSEhiaYtedZBvvgrYdr9CfOmLyNjFeSqoqtQLL5dsQM2d8rv9lQ0a3erXQDPH24Ibo2NZCGClrT4MGlGdHVRoHZA9RV90SxhYuU80uKr8ZBsZD'
+        },
+        {
+            name: 'Cliente B - Imobiliária',
+            adAccountId: 'act_222222222222222',
+            accessToken: 'SEU_TOKEN_DE_ACESSO_PARA_CLIENTE_B'
+        },
+        {
+            name: 'Cliente C - Delivery',
+            adAccountId: 'act_333333333333333',
+            accessToken: 'SEU_TOKEN_DE_ACESSO_PARA_CLIENTE_C'
+        }
+        // Adicione quantos clientes precisar...
+    ];
 
     // Funções de formatação
     const formatCurrency = (value) => `R$ ${value.toFixed(2).replace('.', ',')}`;
     const formatNumber = (value) => value.toLocaleString('pt-BR');
     const formatPercentage = (value) => `${parseFloat(value).toFixed(2)}%`;
 
-    // ======================= FUNÇÃO 1: BUSCAR DADOS GERAIS (PARA OS CARDS) =======================
-    async function fetchAccountMetrics() {
+    // As funções de busca agora recebem as credenciais como parâmetros
+    async function fetchAccountMetrics(adAccountId, accessToken) {
         const fields = 'spend,reach,ctr,actions';
-        const apiUrl = `https://graph.facebook.com/v20.0/${AD_ACCOUNT_ID}/insights?level=account&fields=${fields}&date_preset=last_30d&access_token=${ACCESS_TOKEN}`;
-        try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(`Erro na API (Dados Gerais): ${errorData.error.message}`);
-            }
-            const data = await response.json();
-            return data.data[0];
-        } catch (error) {
-            console.error(error);
-            return null;
-        }
+        const apiUrl = `https://graph.facebook.com/v20.0/${adAccountId}/insights?level=account&fields=${fields}&date_preset=last_30d&access_token=${accessToken}`;
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('Falha ao buscar dados gerais');
+        const data = await response.json();
+        return data.data[0];
     }
 
-    // ======================= FUNÇÃO 2: BUSCAR DADOS POR CAMPANHA (PARA A TABELA) =======================
-    async function fetchCampaignMetrics() {
+    async function fetchCampaignMetrics(adAccountId, accessToken) {
         const fields = 'campaign_name,spend,reach,ctr,actions';
-        const apiUrl = `https://graph.facebook.com/v20.0/${AD_ACCOUNT_ID}/insights?level=campaign&fields=${fields}&date_preset=last_30d&limit=100&access_token=${ACCESS_TOKEN}`;
-        try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(`Erro na API (Dados de Campanha): ${errorData.error.message}`);
-            }
-            const data = await response.json();
-            return data.data; // Retorna o array de todas as campanhas
-        } catch (error) {
-            console.error(error);
-            return []; // Retorna um array vazio em caso de erro
-        }
+        const apiUrl = `https://graph.facebook.com/v20.0/${adAccountId}/insights?level=campaign&fields=${fields}&date_preset=last_30d&limit=100&access_token=${accessToken}`;
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('Falha ao buscar dados de campanha');
+        const data = await response.json();
+        return data.data;
     }
 
-    // ======================= FUNÇÃO PARA POPULAR OS CARDS DE RESUMO =======================
+    // Funções para popular o dashboard
     function updateDashboardCards(insights) {
         if (!insights) {
-             document.querySelectorAll('.metric-card p').forEach(p => p.textContent = 'Erro');
-             return;
+            document.querySelectorAll('.metric-card p').forEach(p => p.textContent = '--');
+            return;
         }
         const valorInvestido = parseFloat(insights.spend || 0);
         document.getElementById('valor-investido').textContent = formatCurrency(valorInvestido);
-
         const profileVisitAction = insights.actions?.find(a => a.action_type === 'instagram_profile_visits');
         const visitasPerfil = profileVisitAction ? parseInt(profileVisitAction.value) : 0;
         document.getElementById('visitas-perfil').textContent = formatNumber(visitasPerfil);
-
         const alcance = parseInt(insights.reach || 0);
         document.getElementById('alcance').textContent = formatNumber(alcance);
-
         const ctr = parseFloat(insights.ctr || 0);
         document.getElementById('ctr').textContent = formatPercentage(ctr);
     }
 
-    // ======================= FUNÇÃO PARA POPULAR A TABELA DE CAMPANHAS =======================
     function populateCampaignTable(campaignData) {
         const tableBody = document.getElementById('campaign-table-body');
-        tableBody.innerHTML = ''; 
-
+        tableBody.innerHTML = '';
         if (campaignData.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Nenhuma campanha encontrada.</td></tr>';
             return;
         }
-
         campaignData.forEach(campaign => {
             const profileVisitAction = campaign.actions?.find(a => a.action_type === 'instagram_profile_visits');
             const visitasPerfil = profileVisitAction ? parseInt(profileVisitAction.value) : 0;
-            
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${campaign.campaign_name}</td>
@@ -91,21 +85,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ======================= INICIALIZAÇÃO =======================
-    async function initializeDashboard() {
+    // ======================= NOVA LÓGICA DE CONTROLE =======================
+
+    async function loadClientData(client) {
         document.querySelectorAll('.metric-card p').forEach(p => p.textContent = '...');
         const tableBody = document.getElementById('campaign-table-body');
         tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Carregando dados...</td></tr>';
         
-        // Busca todos os dados em paralelo
-        const [accountData, campaignData] = await Promise.all([
-            fetchAccountMetrics(),
-            fetchCampaignMetrics()
-        ]);
+        try {
+            const [accountData, campaignData] = await Promise.all([
+                fetchAccountMetrics(client.adAccountId, client.accessToken),
+                fetchCampaignMetrics(client.adAccountId, client.accessToken)
+            ]);
+            updateDashboardCards(accountData);
+            populateCampaignTable(campaignData);
+        } catch (error) {
+            console.error("Erro ao carregar dados do cliente:", error);
+            alert("Não foi possível carregar os dados. Verifique o ID da conta e o Token de Acesso.");
+            document.querySelectorAll('.metric-card p').forEach(p => p.textContent = '--');
+            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Falha ao carregar.</td></tr>';
+        }
+    }
 
-        // Popula as duas seções
-        updateDashboardCards(accountData);
-        populateCampaignTable(campaignData);
+    function populateClientSelector() {
+        const selector = document.getElementById('client-selector');
+        clients.forEach(client => {
+            const option = document.createElement('option');
+            option.value = client.adAccountId;
+            option.textContent = client.name;
+            selector.appendChild(option);
+        });
+    }
+
+    // ======================= INICIALIZAÇÃO =======================
+    function initializeDashboard() {
+        const selector = document.getElementById('client-selector');
+        
+        populateClientSelector();
+
+        selector.addEventListener('change', (event) => {
+            const selectedAccountId = event.target.value;
+            if (selectedAccountId) {
+                const selectedClient = clients.find(c => c.adAccountId === selectedAccountId);
+                loadClientData(selectedClient);
+            }
+        });
     }
 
     initializeDashboard();
