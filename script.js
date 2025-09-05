@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
             accessToken: 'EAAsMEK8FyKkBPVZCb2ZCZA8LZAz3JZB5wzzs809SbuaI0JaL1zde24Bh8FpNvZAGCftotbBZA7qhdPkTNzskIa9u843YG7ZBNLNrZBQQNnVsGia1Kmg5D7Q0qRwOuXZCP4DDKGSEhiaYtedZBvvgrYdr9CfOmLyNjFeSqoqtQLL5dsQM2d8rv9lQ0a3erXQDPH24Ibo2NZCGClrT4MGlGdHVRoHZA9RV90SxhYuU80uKr8ZBsZD'
         },
         {
-            name: 'Cliente B - Imobiliária',
-            adAccountId: 'act_222222222222222',
-            accessToken: 'SEU_TOKEN_DE_ACESSO_PARA_CLIENTE_B'
+            name: 'Cliente - Carlos Buccaneiro',
+            adAccountId: 'act_921227669694316',
+            accessToken: 'EAAsMEK8FyKkBPQTsYolmPHtFfleKZBPQlqbxeZCKRmnkDRl5FEvC3n6OvypaMagzNV2GhbEtYymsrPJU5xPddm5akrsBT1lVcLPuFeREoc2rQXNgmesKlPoyTHZCJAPcpZBRV0vVzwEQ16ZBd1yddq1tsAmq3tyic12O2msFsOVA4qdcp3oEU33ag0VPnvGvZCqcPtSZA6lZAlb9swRJ8XwiEPryQb6Q8LiCZBcYLYXcZD'
         },
         {
             name: 'Cliente C - Delivery',
@@ -134,3 +134,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initializeDashboard();
 });
+
