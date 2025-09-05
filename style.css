@@ -114,7 +114,7 @@ body {
 /* ======================= METRICS GRID ======================= */
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     margin-bottom: 30px;
 }
@@ -149,7 +149,7 @@ body {
     opacity: 0.5;
 }
 
-/* ======================= CAMPAIGN DETAILS TABLE (ATUALIZADO) ======================= */
+/* ======================= CAMPAIGN DETAILS TABLE ======================= */
 .campaign-details {
     margin-top: 40px;
     background-color: var(--bg-light);
@@ -170,9 +170,8 @@ body {
 
 .campaign-details table {
     width: 100%;
-    min-width: 1200px; /* Garante que a tabela tenha uma largura mínima */
     border-collapse: collapse;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 .campaign-details th, .campaign-details td {
