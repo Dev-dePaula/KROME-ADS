@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krome - Dashboard</title>
+    <title>CRM para Tráfego Pago - Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -13,14 +16,14 @@
         <nav class="sidebar">
             <div class="sidebar-header">
                 <i class="ph-bold ph-chart-bar"></i>
-                <span>KROME ADS</span>
+                <span>MetricsCRM</span>
             </div>
             <ul>
-                <li class="active"><a href="#"><i class="ph-fill ph-house"></i><span>Dashboard</span></a></li>
+                <li class="active"><a href="#" data-view="dashboard-view"><i class="ph-fill ph-house"></i><span>Dashboard</span></a></li>
                 <li><a href="#"><i class="ph-fill ph-users"></i><span>Leads</span></a></li>
                 <li><a href="#"><i class="ph-fill ph-rocket-launch"></i><span>Campanhas</span></a></li>
-                <li><a href="#"><i class="ph-fill ph-chart-line-up"></i><span>Relatórios</span></a></li>
-                <li><a href="#"><i class="ph-fill ph-gear"></i><span>Configurações</span></a></li>
+                <li><a href="#" data-view="reports-view"><i class="ph-fill ph-chart-line-up"></i><span>Relatórios</span></a></li>
+                <li><a href="#" data-view="settings-view"><i class="ph-fill ph-gear"></i><span>Configurações</span></a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#"><i class="ph-fill ph-sign-out"></i><span>Sair</span></a>
@@ -28,63 +31,140 @@
         </nav>
 
         <main class="main-content">
-            <header>
-                <h1>Dashboard de Performance</h1>
-                <p>Métricas consolidadas das suas campanhas em tempo real.</p>
-                
-                <div class="client-selector-container">
-                    <label for="client-selector">Selecione um Cliente:</label>
-                    <select id="client-selector">
-                        <option value="">-- Escolha uma conta --</option>
+            <div id="dashboard-view" class="view active-view">
+                <header>
+                    <h1>Dashboard de Performance</h1>
+                    <p>Métricas consolidadas das suas campanhas em tempo real.</p>
+                    <div class="client-selector-container">
+                        <label for="client-selector">Selecione um Cliente:</label>
+                        <select id="client-selector">
+                            <option value="">-- Escolha uma conta --</option>
                         </select>
-                </div>
+                    </div>
                 </header>
 
-            <section class="metrics-grid">
-                <div class="metric-card">
-                    <h3>Valor Investido (Total)</h3>
-                    <p id="valor-investido">--</p>
-                    <span class="card-icon"><i class="ph-bold ph-wallet"></i></span>
+                <section class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Valor Investido (Total)</h3>
+                        <p id="valor-investido">--</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Visitas ao Perfil (Total)</h3>
+                        <p id="visitas-perfil">--</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Alcance (Total)</h3>
+                        <p id="alcance">--</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>CTR (Médio)</h3>
+                        <p id="ctr">--</p>
+                    </div>
+                </section>
+                
+                <section class="campaign-details">
+                    <h2>Performance por Campanha</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    </tr>
+                            </thead>
+                            <tbody id="campaign-table-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div id="reports-view" class="view">
+                 <header>
+                    <h1>Relatório de Performance</h1>
+                    <p>Visão detalhada das métricas para o cliente selecionado.</p>
+                    <button id="download-pdf-btn"><i class="ph ph-download-simple"></i> Baixar Relatório em PDF</button>
+                </header>
+                
+                <div id="report-content">
+                    <div class="report-header">
+                        <h2>Relatório - <span id="report-client-name">Nenhum Cliente Selecionado</span></h2>
+                        <p>Período: Últimos 30 dias</p>
+                    </div>
+                    <section class="metrics-grid">
+                         <div class="metric-card">
+                            <h3>Valor Investido</h3>
+                            <p id="report-valor-investido">--</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Visitas ao Perfil</h3>
+                            <p id="report-visitas-perfil">--</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Alcance</h3>
+                            <p id="report-alcance">--</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>CTR (Médio)</h3>
+                            <p id="report-ctr">--</p>
+                        </div>
+                    </section>
+                    <section class="campaign-details">
+                        <h2>Performance por Campanha</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        </tr>
+                                </thead>
+                                <tbody id="report-campaign-table-body"></tbody>
+                            </table>
+                        </div>
+                    </section>
                 </div>
-                <div class="metric-card">
-                    <h3>Visitas ao Perfil (Total)</h3>
-                    <p id="visitas-perfil">--</p>
-                    <span class="card-icon"><i class="ph-bold ph-user-circle"></i></span>
+            </div>
+
+            <div id="settings-view" class="view">
+                <header>
+                    <h1>Configurações</h1>
+                    <p>Adicione clientes e personalize as métricas do seu dashboard.</p>
+                </header>
+
+                <div class="settings-container">
+                    <div class="settings-form-card">
+                        <h2>Adicionar Novo Cliente</h2>
+                        <form id="add-client-form">
+                            <div class="form-group">
+                                <label for="client-name">Nome do Cliente</label>
+                                <input type="text" id="client-name" placeholder="Ex: Loja de Roupas" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ad-account-id">ID da Conta de Anúncios</label>
+                                <input type="text" id="ad-account-id" placeholder="act_123456789" required>
+                            </div>
+                             <div class="form-group">
+                                <label for="access-token">Token de Acesso</label>
+                                <textarea id="access-token" rows="4" placeholder="Cole o token de acesso da API aqui" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">Salvar Cliente</button>
+                        </form>
+                    </div>
+
+                    <div class="client-list-card">
+                        <h2>Clientes Salvos</h2>
+                        <ul id="client-list"></ul>
+                    </div>
                 </div>
-                <div class="metric-card">
-                    <h3>Alcance (Total)</h3>
-                    <p id="alcance">--</p>
-                    <span class="card-icon"><i class="ph-bold ph-users-three"></i></span>
+                
+                <div class="settings-metrics-card">
+                    <h2>Métricas Exibidas nos Relatórios</h2>
+                    <p class="subtitle">Selecione as métricas que você deseja ver nas tabelas do Dashboard e Relatórios.</p>
+                    <div id="metrics-selector-container">
+                        </div>
+                    <button id="save-metrics-btn" class="btn-primary">Salvar Métricas</button>
                 </div>
-                <div class="metric-card">
-                    <h3>CTR (Médio)</h3>
-                    <p id="ctr">--</p>
-                    <span class="card-icon"><i class="ph-bold ph-cursor-click"></i></span>
-                </div>
-            </section>
-            
-            <section class="campaign-details">
-                <h2>Performance por Campanha</h2>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome da Campanha</th>
-                                <th>Valor Investido</th>
-                                <th>Visitas ao Perfil</th>
-                                <th>Alcance</th>
-                                <th>CTR (%)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="campaign-table-body">
-                            </tbody>
-                    </table>
-                </div>
-            </section>
+
+            </div>
 
         </main>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
