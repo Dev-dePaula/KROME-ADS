@@ -38,6 +38,7 @@ body {
     display: flex;
     flex-direction: column;
     border-right: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .sidebar-header {
@@ -111,6 +112,14 @@ body {
     color: var(--text-secondary);
 }
 
+/* ======================= VIEW NAVIGATION ======================= */
+.view {
+    display: none;
+}
+.view.active-view {
+    display: block;
+}
+
 /* ======================= CLIENT SELECTOR ======================= */
 .client-selector-container {
     margin-top: 25px;
@@ -121,11 +130,13 @@ body {
     align-items: center;
     gap: 15px;
     max-width: 500px;
+    border: 1px solid var(--border-color);
 }
 
 .client-selector-container label {
     font-weight: 500;
     color: var(--text-secondary);
+    white-space: nowrap;
 }
 
 #client-selector {
@@ -149,7 +160,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .metric-card {
@@ -158,6 +169,11 @@ body {
     border-radius: 10px;
     border: 1px solid var(--border-color);
     position: relative;
+    transition: transform 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
 }
 
 .metric-card h3 {
@@ -173,25 +189,19 @@ body {
     color: var(--text-primary);
 }
 
-.metric-card .card-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 1.8rem;
-    color: var(--primary);
-    opacity: 0.5;
-}
-
-/* ======================= CAMPAIGN DETAILS TABLE ======================= */
+/* ======================= TABLES (Dashboard & Reports) ======================= */
 .campaign-details {
     margin-top: 40px;
+}
+
+.campaign-details, #report-content {
     background-color: var(--bg-light);
     padding: 25px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
 }
 
-.campaign-details h2 {
+.campaign-details h2, .report-header {
     margin-bottom: 20px;
     font-weight: 600;
 }
@@ -201,24 +211,241 @@ body {
     overflow-x: auto;
 }
 
-.campaign-details table {
+.campaign-details table, #report-content table {
     width: 100%;
     border-collapse: collapse;
     white-space: nowrap;
 }
 
-.campaign-details th, .campaign-details td {
+.campaign-details th, .campaign-details td,
+#report-content th, #report-content td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
 }
 
-.campaign-details thead th {
+.campaign-details thead th, #report-content thead th {
     color: var(--text-secondary);
     font-weight: 600;
     font-size: 0.9rem;
 }
 
-.campaign-details tbody tr:hover {
+.campaign-details tbody tr:hover, #report-content tbody tr:hover {
     background-color: #3a3a5a;
+}
+
+/* ======================= REPORTS VIEW SPECIFIC STYLES ======================= */
+#reports-view header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#download-pdf-btn {
+    margin-top: 20px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#download-pdf-btn:hover {
+    background-color: #3a3ad8;
+}
+
+#download-pdf-btn:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+}
+
+#report-content {
+    margin-top: 40px;
+    background-color: var(--bg-dark);
+}
+
+.report-header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-header h2 {
+    font-size: 1.8rem;
+    color: var(--primary);
+}
+
+/* ======================= SETTINGS VIEW ======================= */
+.settings-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.settings-form-card, .client-list-card {
+    background-color: var(--bg-light);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.settings-form-card h2, .client-list-card h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #3a3ad8;
+}
+
+#client-list {
+    list-style: none;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 0;
+}
+
+#client-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#client-list li:last-child {
+    border-bottom: none;
+}
+
+.client-info span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.client-info strong {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.btn-danger {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #e60000;
+}
+
+/* ======================= METRICS SELECTOR (SETTINGS) ======================= */
+.settings-metrics-card {
+    margin-top: 30px;
+    background-color: var(--bg-light);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.settings-metrics-card h2 {
+    margin-bottom: 5px;
+}
+
+.settings-metrics-card .subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+}
+
+#metrics-selector-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.metric-group {
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.metric-group legend {
+    padding: 0 10px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.metric-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.metric-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.metric-item label {
+    cursor: pointer;
+}
+
+#save-metrics-btn {
+    margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+    .settings-container {
+        grid-template-columns: 1fr;
+    }
 }
